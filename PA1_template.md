@@ -172,11 +172,28 @@ totsteps_median_imputed <- median(data_totsteps_imputed$totsteps, na.rm=TRUE)
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+Make factor variable `daytype`.
 
 ```r
-imputed_data$daytype <- factor(weekdays(imputed_data$date, abbreviated=TRUE))
+imputed_data$daytype <- factor(weekdays(imputed_data$date))
+levels(imputed_data$daytype) <- list(
+    weekday = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
+    weekend = c("Saturday", "Sunday")
+)
 ```
 
+Calculate the average number of steps across weekdays and weekends.
+
+```r
+imputed_data_grp <- imputed_data %>% select(interval, daytype, steps) %>% group_by(daytype, interval)
+imputed_data_avgsteps <- summarize(imputed_data_grp, avgsteps = mean(steps))
 ```
-## Error in weekdays(imputed_data$date, abbreviated = TRUE): unused argument (abbreviated = TRUE)
+
+Next, we plot the time series in panels.
+
+```r
+xyplot(avgsteps ~ interval | daytype, imputed_data_avgsteps,
+       type="l", xlab="Interval", ylab="Average steps", main="Average steps by interval")
 ```
+
+![plot of chunk panelplot](figure/panelplot-1.png) 
