@@ -193,7 +193,7 @@ Next, we plot the time series in panels.
 
 ```r
 xyplot(avgsteps ~ interval | daytype, imputed_data_avgsteps,
-       type="l", xlab="Interval", ylab="Average steps", main="Average steps by interval")
+       type="l", xlab="Interval", ylab="Average steps", main="Average steps by interval", layout=c(1,2))
 ```
 
 ![plot of chunk panelplot](figure/panelplot-1.png) 

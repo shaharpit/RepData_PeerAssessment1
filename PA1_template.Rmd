@@ -162,5 +162,5 @@ imputed_data_avgsteps <- summarize(imputed_data_grp, avgsteps = mean(steps))
 Next, we plot the time series in panels.
 ```{r panelplot}
 xyplot(avgsteps ~ interval | daytype, imputed_data_avgsteps,
-       type="l", xlab="Interval", ylab="Average steps", main="Average steps by interval")
+       type="l", xlab="Interval", ylab="Average steps", main="Average steps by interval", layout=c(1,2))
 ```
